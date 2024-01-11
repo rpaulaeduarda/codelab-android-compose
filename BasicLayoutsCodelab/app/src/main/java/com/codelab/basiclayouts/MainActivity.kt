@@ -27,12 +27,16 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.paddingFromBaseline
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
@@ -114,7 +118,10 @@ fun AlignYourBodyElement(
         Text(
             text = stringResource(id = text),
             modifier = Modifier
-                .paddingFromBaseline(top = 24.dp, bottom = 8.dp), // espaçamento de acordo com a linha base do texto
+                .paddingFromBaseline(
+                    top = 24.dp,
+                    bottom = 8.dp
+                ), // espaçamento de acordo com a linha base do texto
             style = MaterialTheme.typography.bodyMedium
         )
     }
@@ -165,12 +172,25 @@ fun AlignYourBodyRow(
     }
 }
 
-// Step: Favorite collections grid - LazyGrid
 @Composable
 fun FavoriteCollectionsGrid(
     modifier: Modifier = Modifier
 ) {
-    // Implement composable here
+    LazyHorizontalGrid(
+        rows = GridCells.Fixed(2), // define a grid com duas linhas fixas
+        modifier = modifier.height(168.dp),
+        contentPadding = PaddingValues(horizontal = 16.dp), // espaçamento nas laterais
+        horizontalArrangement = Arrangement.spacedBy(16.dp), // espaçamento horizontal entre os filhos
+        verticalArrangement = Arrangement.spacedBy(16.dp) // espaçamento vertical entre os filhos
+    ) {
+        items(favoriteCollectionsData) { item ->
+            FavoriteCollectionCard(
+                drawable = item.drawable,
+                text = item.text,
+                modifier = Modifier.height(80.dp)
+            )
+        }
+    }
 }
 
 // Step: Home section - Slot APIs
@@ -207,7 +227,7 @@ private fun SootheNavigationRail(modifier: Modifier = Modifier) {
 
 // Step: Landscape Mode
 @Composable
-fun MySootheAppLandscape(){
+fun MySootheAppLandscape() {
     // Implement composable here
 }
 
