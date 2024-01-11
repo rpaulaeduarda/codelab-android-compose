@@ -26,6 +26,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
@@ -38,7 +39,9 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
@@ -211,10 +214,22 @@ fun HomeSection(
     }
 }
 
-// Step: Home screen - Scrolling
 @Composable
 fun HomeScreen(modifier: Modifier = Modifier) {
-    // Implement composable here
+    // quando nao é um componente Lazy, é necessario adicionar o comportamento de rolagem
+    Column (modifier = modifier.verticalScroll(rememberScrollState())) {
+        /* o spacer tem o mesmo papel do padding, mas o padding nas extremidades
+        * pode cortar conteudo quando acontece rolagem */
+        Spacer(Modifier.height(16.dp)) // substitui o padding
+        SearchBar(Modifier.padding(horizontal = 16.dp))
+        HomeSection(text = R.string.align_your_body) {
+            AlignYourBodyRow()
+        }
+        HomeSection(text = R.string.favorite_collections) {
+            FavoriteCollectionsGrid()
+        }
+        Spacer(Modifier.height(16.dp))
+    }
 }
 
 // Step: Bottom navigation - Material
